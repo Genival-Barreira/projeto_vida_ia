@@ -1,65 +1,51 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export default function Home(){
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <section className="section hero section-strong">
+        <div className="container hero-grid">
+          <div>
+            <h1>Falar é o primeiro passo para o cuidado.</h1>
+            <p>
+              Nosso projeto busca compreender, acolher e dar visibilidade à saúde mental e à prevenção
+              do suicídio por meio de pesquisa, empatia e informação.
+            </p>
+            <div className="hero-actions">
+              <Link className="btn btn-primary" href="/sobre">Saiba mais sobre o projeto</Link>
+              <Link className="btn btn-outline" href="/cartilha">Acessar Cartilha</Link>
+            </div>
+          </div>
+
+          <div className="card help-card" style={{background:"#0F1A3A", color:"#fff"}}>
+            <p><strong>Se você ou alguém precisa de ajuda agora:</strong></p>
+            <p className="mt-1">Ligue <strong>188 (CVV)</strong> — atendimento 24h.</p>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="section section-medium">
+        <div className="container">
+          <h2>Organizações e serviços</h2>
+          <div className="grid grid-3 mt-2">
+            <div className="card">
+              <h3>CVV — 188</h3>
+              <p>Centro de Valorização da Vida. Atendimento 24h por telefone, chat e e-mail.</p>
+              <a className="btn btn-outline mt-1" href="https://cvv.org.br" target="_blank" rel="noopener">Site do CVV</a>
+            </div>
+            <div className="card">
+              <h3>CAPS</h3>
+              <p>Centros de Atenção Psicossocial. Procure a unidade mais próxima.</p>
+              <a className="btn btn-outline mt-1" href="https://www.gov.br/saude/pt-br/assuntos/saude-mental/caps" target="_blank" rel="noopener">Saiba mais</a>
+            </div>
+            <div className="card">
+              <h3>Hospitais de referência</h3>
+              <p>Busque o serviço de saúde mais próximo em caso de emergência.</p>
+              <a className="btn btn-outline mt-1" href="https://www.gov.br/saude" target="_blank" rel="noopener">Site do MS</a>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+    </>
   );
 }

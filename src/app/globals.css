@@ -1,26 +1,371 @@
-@import "tailwindcss";
+/* =========================================================
+   GLOBALS.CSS — Projeto Vida & Esperança
+   Paleta azul forte (base #44A3F8), layout responsivo,
+   menu móvel com gaveta, cards, páginas de conteúdo e footer.
+   Basta colar este arquivo inteiro.
+   ========================================================= */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ======= Tema (azul visível e mais forte) ======= */
+:root{
+  /* tons principais — reforçados, mas dentro do limite de #44A3F8 */
+  --brand-900:#155FAE;
+  --brand-800:#1C74D3;   /* hover forte / ênfases */
+  --brand-700:#2E8AE0;   /* títulos/destaques */
+  --brand-600:#44A3F8;   /* COR PRINCIPAL (botões/links) */
+  --brand-500:#5BB0FA;   /* degradês/variações */
+  --brand-300:#8CC7FB;   /* bordas/detalhes */
+  --brand-150:#CFE6FF;   /* fundo azul visível */
+  --brand-100:#DFEEFF;   /* fundo de seção média */
+  --brand-50:#EEF6FF;    /* fundo suave */
+
+  /* textos e bordas */
+  --ink:#0E1C2B;         /* títulos e texto forte */
+  --ink-2:#2D3E55;       /* parágrafos */
+  --border:#B9D4F4;      /* azul acinzentado sutil */
+
+  /* fundos gerais */
+  --bg:#F8FBFF;          /* fundo global */
+  --bg-soft-1:#CFE6FF;   /* seção azul forte visível */
+  --bg-soft-2:#DFEEFF;   /* seção média */
+  --bg-soft-3:#EEF6FF;   /* fundo suave */
+
+  /* header/rodapé mais contrastantes */
+  --header-bg:#2E8AE0;   /* azul médio-forte no topo */
+  --header-text:#FFFFFF;
+  --footer-bg:#2E8AE0;   /* azul médio-forte no rodapé */
+  --footer-text:#FFFFFF;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ===== Reset/estrutura ===== */
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{
+  overflow-x:hidden;
+  background:var(--bg);
+  color:var(--ink);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+  line-height:1.6;
+}
+img,svg,video{ max-width:100%; height:auto; display:block; }
+.container{ width:min(1120px,92%); margin-inline:auto; }
+.section{ padding: clamp(1.8rem, 5vw, 3.2rem) 0; }
+
+/* ===== Títulos / texto ===== */
+h1,h2,h3{ letter-spacing:-.01em; }
+h1{ font-size: clamp(2rem, 5vw, 3rem); line-height:1.15; }
+h2{ font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
+p.lead{ color:var(--ink-2); max-width:75ch; }
+
+/* ===== Botões ===== */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  padding:.9rem 1.15rem; border-radius:1rem; font-weight:700; text-decoration:none;
+  transition:.2s ease; cursor:pointer; border:1px solid transparent;
+}
+.btn-primary{ background:var(--brand-600); color:#fff; }
+.btn-primary:hover{ background:var(--brand-800); transform:translateY(-1px); }
+.btn-outline{ color:var(--brand-700); border-color:var(--brand-700); background:transparent; }
+.btn-outline:hover{ background:var(--brand-150); }
+.btn-lg{ padding:1rem 1.35rem; border-radius:1rem; }
+
+/* ===== Header + menu móvel (gaveta) ===== */
+.header{
+  position:sticky; top:0; z-index:50;
+  background:var(--header-bg); color:var(--header-text);
+  border-bottom:1px solid rgba(255,255,255,.18);
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+.nav{ display:flex; justify-content:space-between; align-items:center; min-height:64px; }
+.links{ display:flex; gap:1rem; align-items:center; }
+.links a{ text-decoration:none; color:#fff; font-weight:600; }
+.links a:hover{ color:var(--brand-150); }
+.burger{ display:none; background:none; border:0; cursor:pointer; padding:.25rem; }
+.burger span{ display:block; width:26px; height:3px; background:#fff; border-radius:2px; }
+.burger span+span{ margin-top:5px; }
+@media (max-width:860px){ .links{ display:none; } .burger{ display:block; } }
+
+/* Gaveta (Drawer) */
+.drawer{ position:fixed; inset:0; pointer-events:none; z-index:90; }
+.drawer::before{
+  content:""; position:absolute; inset:0; background:rgba(0,0,0,.45);
+  opacity:0; transition:opacity .2s;
+}
+.drawer-panel{
+  position:absolute; left:0; top:0; bottom:0; width:min(78%,320px);
+  background:#fff; border-right:1px solid var(--border);
+  transform:translateX(-102%); transition:transform .25s;
+  padding: calc(1rem + env(safe-area-inset-top)) 1.25rem 1.25rem;
+  box-shadow: 2px 0 16px rgba(0,0,0,.08);
+  display:flex; flex-direction:column;
+}
+.drawer a{
+  text-decoration:none; color:var(--ink); font-weight:600; padding:.7rem 0;
+  border-radius:.6rem;
+}
+.drawer a:hover{ background: var(--brand-150); }
+.drawer.is-open{ pointer-events:auto; }
+.drawer.is-open::before{ opacity:1; }
+.drawer.is-open .drawer-panel{ transform:translateX(0); }
+.drawer-nav{ display:flex; flex-direction:column; gap:.5rem; margin-top:.25rem; }
+.drawer-nav .btn{ width:100%; justify-content:center; margin-top:.5rem; }
+
+/* ===== Grids / cards ===== */
+.grid{ display:grid; gap:1rem; }
+.grid-2{ grid-template-columns:1fr 1fr; }
+.grid-3{ grid-template-columns:repeat(3,1fr); }
+@media (max-width:960px){ .grid-3{ grid-template-columns:1fr 1fr; } }
+@media (max-width:640px){ .grid-3, .grid-2{ grid-template-columns:1fr; } }
+.card{
+  background:#fff; border:1px solid var(--brand-300); border-radius:1rem; padding:1rem;
+  box-shadow:0 6px 18px rgba(23,108,197,.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ===== Seções com fundos azuis VISÍVEIS ===== */
+.section-strong{ background:var(--bg-soft-1); } /* azul claro forte */
+.section-medium{ background:var(--bg-soft-2); }
+.section-soft{ background:var(--bg-soft-3); }
+
+/* ===== Home ===== */
+.hero{
+  background: linear-gradient(180deg, var(--bg-soft-1) 0%, var(--bg-soft-2) 45%, var(--bg) 100%);
+}
+.hero-grid{ display:grid; grid-template-columns:1.15fr 1fr; gap:2rem; align-items:center; }
+.hero p{ color:var(--ink-2); max-width:60ch; margin:.5rem 0 1rem; }
+.hero-actions{ display:flex; gap:.8rem; flex-wrap:wrap; }
+@media (max-width:920px){ .hero-grid{ grid-template-columns:1fr; } }
+
+/* ===== Páginas de conteúdo (Sobre & Cartilha) ===== */
+.page-hero{
+  background:var(--bg-soft-2); border:1px solid var(--brand-300);
+  border-radius:1rem; padding:1rem; margin-bottom:1rem;
+}
+.content-grid{ display:grid; grid-template-columns:1.45fr 1fr; gap:1.2rem; align-items:start; }
+@media (max-width:1024px){ .content-grid{ grid-template-columns:1fr; } }
+.prose{ max-width:75ch; }
+
+/* Títulos e parágrafos nas páginas de conteúdo */
+.prose h3{ color:var(--brand-700); margin:1.2rem 0 .6rem; text-align:left; }
+.prose p{
+  color:var(--ink-2); margin:.8rem 0;
+  text-align: justify; text-justify: inter-word; hyphens: auto;
+}
+.prose h2, .prose h4{ text-align:left; }
+
+/* Capa/figura – nunca “estoura” */
+.figure{
+  background:var(--brand-100); border:1px solid var(--brand-300); border-radius:.9rem;
+  padding:.6rem; width:100%; max-width:100%; overflow:hidden; margin-top:.8rem;
+}
+.figure img, .figure .next-image{
+  width:100% !important; height:auto !important; display:block; border-radius:.6rem;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ===== Footer MAIS FORTE ===== */
+.footer{
+  background:var(--footer-bg); color:var(--footer-text);
+  padding: 2rem 1.5rem; margin-top:2rem; border-top:none;
+}
+.footer a{ color:#FFFFFF; text-decoration:none; font-weight:600; }
+.footer a:hover{ text-decoration:underline; color:var(--brand-150); }
+.footer-top{ display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:1rem; }
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,0.25); margin-top:1rem; padding-top:1rem; font-size:.95rem;
+}
+@media (max-width:860px){ .footer-top{ grid-template-columns:1fr; } }
+@media (max-width:768px){
+  .footer{ padding: 2rem 1.25rem 2.2rem; }
+  .footer-top, .footer-bottom{ padding-inline: .25rem; }
+}
+
+/* ===== util ===== */
+.divider{ height:1px; background:var(--border); margin:1.5rem 0; }
+.mt-1{ margin-top:.5rem; } .mt-2{ margin-top:1rem; } .mt-3{ margin-top:1.5rem; }
+
+/* ============ Ajustes específicos (do seu projeto) ============ */
+
+/* Sidebar da cartilha – refinada */
+.sidebar.card{
+  background:#fff;
+  border:1px solid #E6EEF9;           /* borda mais suave */
+  border-radius:1rem;
+  padding:1.1rem 1.2rem 1.25rem;
+  box-shadow:0 6px 18px rgba(23,108,197,.06);
+}
+.sidebar.card h3{ margin: .25rem 0 .75rem; }
+
+/* lista sem bullets padrão + marcadores elegantes */
+.sidebar.card ul{ list-style:none; padding:0; margin:.25rem 0 .9rem; }
+.sidebar.card li{
+  position:relative; padding-left:1.1rem; margin:.4rem 0 .55rem; color:var(--ink-2);
+}
+.sidebar.card li::before{
+  content:""; position:absolute; left:0; top:.65em; width:7px; height:7px;
+  border-radius:50%; background:var(--brand-600); box-shadow:0 0 0 2px var(--brand-150);
+}
+.sidebar.card p{ margin:.55rem 0 .4rem; color:var(--ink-2); }
+.sidebar.card .btn{ margin-top:.9rem; width:100%; }
+
+@media (max-width: 560px){
+  .sidebar.card{ padding:1.1rem 1rem 1.2rem; }
+}
+
+/* Cards da Equipe */
+.equipe-card{
+  text-align: center; padding: 1.2rem 1rem 1.5rem;
+  border: 1px solid #d8e9ff; border-radius: 1rem; background: #fff;
+  transition: all 0.25s ease;
+}
+.equipe-card:hover{ transform: translateY(-4px); box-shadow: 0 8px 20px rgba(23, 108, 197, 0.08); }
+.equipe-img{
+  width: 120px; height: 120px; margin: 0 auto 0.9rem; border-radius: 50%; overflow: hidden;
+  border: 3px solid var(--brand-600);
+}
+.equipe-card h3{ color: var(--ink); font-size: 1.15rem; margin-bottom: 0.25rem; }
+.equipe-card .cargo{ font-weight:600; color: var(--brand-700); margin-bottom:.3rem; }
+.equipe-card .formacao{
+  color: var(--ink-2); font-size: .95rem; line-height:1.5; margin-top:.4rem;
+  text-align: justify; text-justify: inter-word; hyphens: auto;
+}
+@media (max-width: 768px){ .grid-3 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px){ .grid-3 { grid-template-columns: 1fr; } }
+
+/* Remover borda do card "Objetivos" (sobre) */
+.objetivos-card{
+  border: none !important; box-shadow: none !important; background: transparent; padding: 0;
+}
+.objetivos-card h3{ margin-bottom: .6rem; }
+.objetivos-card ul{ list-style: disc; margin-left: 1.5rem; color: var(--ink-2); }
+
+/* ===== Correções finais de acessibilidade/toque ===== */
+.drawer-panel, .drawer-close, .drawer-nav a{ -webkit-tap-highlight-color: transparent; }
+
+
+
+/* === 1. TITULOS das páginas SOBRE, CARTILHA e EQUIPE === */
+/* remove borda e fundo da faixa azul dos títulos */
+.page-hero {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin-bottom: 2rem;
+}
+
+.page-hero h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: var(--brand-700);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.page-hero p {
+  font-size: 1rem;
+  color: var(--ink-2);
+  max-width: 65ch;
+}
+
+/* === 2. BLOCO “Equipe de Elaboração” na CARTILHA === */
+/* mesmo estilo do “Objetivos” da página Sobre */
+.equipe-elaboracao-card {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.equipe-elaboracao-card h3 {
+  color: var(--brand-700);
+  margin-bottom: 0.6rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.equipe-elaboracao-card ul {
+  list-style: disc;
+  margin-left: 1.5rem;
+  color: var(--ink-2);
+  margin-bottom: 0.8rem;
+}
+
+.equipe-elaboracao-card li {
+  margin: 0.4rem 0;
+}
+
+.equipe-elaboracao-card p {
+  color: var(--ink-2);
+  margin: 0.6rem 0 1rem;
+  line-height: 1.5;
+}
+
+.equipe-elaboracao-card .btn {
+  margin-top: 1.2rem;
+  width: 100%;
+}
+
+
+
+
+/* === Aplica o fundo azul da página "Equipe" SOMENTE em "Sobre" e "Cartilha" === */
+
+/* Define o fundo azul suave apenas para as páginas internas */
+body.page-sobre,
+body.page-cartilha {
+  background-color: var(--bg-soft-2) !important; /* mesmo azul da Equipe */
+}
+
+/* Garante que elementos internos fiquem transparentes para mostrar o fundo */
+body.page-sobre .container,
+body.page-cartilha .container,
+body.page-sobre .section,
+body.page-cartilha .section,
+body.page-sobre .page-hero,
+body.page-cartilha .page-hero {
+  background: transparent !important;
+}
+
+/* === Card de Ajuda (CVV / apoio emocional) – tonalidade mais clara === */
+.help-card {
+  background: #3769d4 !important;  /* azul médio visível, mais claro que o atual */
+  color: #F5F8FF !important;       /* texto claro */
+  border-radius: 1rem;
+  padding: 1.2rem 1.4rem;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* Deixa links mais destacados dentro do card */
+.help-card a {
+  color: #A8C8FF !important;       /* azul suave e legível */
+  font-weight: 600;
+}
+
+.help-card a:hover {
+  text-decoration: underline;
+}
+
+
+/* Logo + nome no topo */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  text-decoration:none;
+}
+.brand img{
+  display:block;
+  border-radius:50%;
+}
+.brand-name{
+  font-weight:800;
+  font-size:1.06rem;
+  line-height:1;
+  color:#fff;                   /* header é azul: texto branco */
+  letter-spacing:.2px;
+  white-space:nowrap;           /* mantém numa linha quando der */
+}
+
+/* Ajustes responsivos do nome (não some, só reduz) */
+@media (max-width:520px){
+  .brand-name{ font-size:.98rem; }
+}
+@media (max-width:420px){
+  .brand-name{ font-size:.92rem; }
 }
