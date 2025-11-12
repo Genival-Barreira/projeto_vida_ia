@@ -1,7 +1,7 @@
 import PageSkin from "../../components/PageSkin";
 
 export const metadata = {
-  title: "Sobre o Projeto – Vida & Esperança",
+  title: "Sobre o Projeto – Vida & IA",
   description: "Origem, objetivos e propósito da pesquisa.",
 };
 
