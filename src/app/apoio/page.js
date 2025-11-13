@@ -40,7 +40,7 @@ export default function Apoio() {
             </p>
             <a
               className="btn btn-outline mt-1"
-              href="https://www.gov.br/saude/pt-br/assuntos/saude-mental/caps"
+              href="https://www.tjto.jus.br/violencia-domestica/rede-de-atendimento-e-enfrentamento/centro-de-atencao-psicossocial-caps"
               target="_blank"
               rel="noopener noreferrer"
             >
