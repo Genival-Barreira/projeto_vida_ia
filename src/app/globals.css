@@ -1,11 +1,4 @@
-/* =========================================================
-   GLOBALS.CSS — Projeto Vida & Esperança
-   Paleta azul forte (base #44A3F8), layout responsivo,
-   menu móvel com gaveta, cards, páginas de conteúdo e footer.
-   Basta colar este arquivo inteiro.
-   ========================================================= */
 
-/* ======= Tema (azul visível e mais forte) ======= */
 :root{
   /* tons principais — reforçados, mas dentro do limite de #44A3F8 */
   --brand-900:#155FAE;
@@ -185,7 +178,7 @@ p.lead{ color:var(--ink-2); max-width:75ch; }
 /* Sidebar da cartilha – refinada */
 .sidebar.card{
   background:#fff;
-  border:1px solid #E6EEF9;           /* borda mais suave */
+  border:1px solid #E6EEF9;           
   border-radius:1rem;
   padding:1.1rem 1.2rem 1.25rem;
   box-shadow:0 6px 18px rgba(23,108,197,.06);
@@ -263,7 +256,7 @@ p.lead{ color:var(--ink-2); max-width:75ch; }
   max-width: 65ch;
 }
 
-/* === 2. BLOCO “Equipe de Elaboração” na CARTILHA === */
+/* === BLOCO “Equipe de Elaboração” na CARTILHA === */
 /* mesmo estilo do “Objetivos” da página Sobre */
 .equipe-elaboracao-card {
   border: none !important;
@@ -302,10 +295,6 @@ p.lead{ color:var(--ink-2); max-width:75ch; }
 }
 
 
-
-
-/* === Aplica o fundo azul da página "Equipe" SOMENTE em "Sobre" e "Cartilha" === */
-
 /* Define o fundo azul suave apenas para as páginas internas */
 body.page-sobre,
 body.page-cartilha {
@@ -324,8 +313,8 @@ body.page-cartilha .page-hero {
 
 /* === Card de Ajuda (CVV / apoio emocional) – tonalidade mais clara === */
 .help-card {
-  background: #3769d4 !important;  /* azul médio visível, mais claro que o atual */
-  color: #F5F8FF !important;       /* texto claro */
+  background: #3769d4 !important;  
+  color: #F5F8FF !important;       
   border-radius: 1rem;
   padding: 1.2rem 1.4rem;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
@@ -333,7 +322,7 @@ body.page-cartilha .page-hero {
 
 /* Deixa links mais destacados dentro do card */
 .help-card a {
-  color: #A8C8FF !important;       /* azul suave e legível */
+  color: #A8C8FF !important;       
   font-weight: 600;
 }
 
@@ -357,9 +346,9 @@ body.page-cartilha .page-hero {
   font-weight:800;
   font-size:1.06rem;
   line-height:1;
-  color:#fff;                   /* header é azul: texto branco */
+  color:#fff;                  
   letter-spacing:.2px;
-  white-space:nowrap;           /* mantém numa linha quando der */
+  white-space:nowrap;           
 }
 
 /* Ajustes responsivos do nome (não some, só reduz) */
